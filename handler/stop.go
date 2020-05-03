@@ -43,8 +43,8 @@ func DoStop(wf *aw.Workflow, args []string) (string, error) {
 		return "", fmt.Errorf("cannot store the left tasks, please try again later 🙏 (%w)", err)
 	}
 
-	clientID := alfred.GetClientID(wf)
-	client, err := calendar.NewClient(context.Background(), calendar.NewConfig(clientID), token)
+	config := alfred.GetOAuth(wf)
+	client, err := calendar.NewClient(context.Background(), calendar.NewConfig(config), token)
 
 	if err != nil {
 		return "", fmt.Errorf("something wrong happened, please try again later 🙏 (%w)", err)

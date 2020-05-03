@@ -14,6 +14,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/pkg/browser"
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"google.golang.org/api/calendar/v3"
 )
 
@@ -24,10 +25,15 @@ type response struct {
 	err    error
 }
 
-func NewConfig(clientID string) *oauth2.Config {
+type AuthorizeAPI struct {
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+}
+
+func NewConfig(auth *AuthorizeAPI) *oauth2.Config {
 	return &oauth2.Config{
-		ClientID:     clientID,
-		ClientSecret: "",
+		ClientID:     auth.ClientID,
+		ClientSecret: auth.ClientSecret,
 		RedirectURL:  "http://localhost:" + strconv.Itoa(port),
 		Scopes:       []string{calendar.CalendarScope},
 		Endpoint: oauth2.Endpoint{

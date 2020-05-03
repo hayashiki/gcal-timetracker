@@ -14,8 +14,8 @@ func DoSetup(wf *aw.Workflow, _ []string) (string, error) {
 		return "", fmt.Errorf("please authorize")
 	}
 
-	clientID := alfred.GetClientID(wf)
-	client, err := calendar.NewClient(context.Background(), calendar.NewConfig(clientID), token)
+	config := alfred.GetOAuth(wf)
+	client, err := calendar.NewClient(context.Background(), calendar.NewConfig(config), token)
 
 	if err != nil {
 		return "", fmt.Errorf("something wrong happened, please try again later 🙏 (%w)", err)

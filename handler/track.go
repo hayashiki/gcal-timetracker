@@ -43,8 +43,8 @@ func DoTrack(wf *aw.Workflow, args []string) (string, error) {
 		return "", fmt.Errorf("please setup your tracking calendar with `tt setup` first 👀")
 	}
 
-	clientID := alfred.GetClientID(wf)
-	client, err := calendar.NewClient(context.Background(), calendar.NewConfig(clientID), token)
+	config := alfred.GetOAuth(wf)
+	client, err := calendar.NewClient(context.Background(), calendar.NewConfig(config), token)
 
 	if err != nil {
 		return "", fmt.Errorf("something wrong happened, please try again later 🙏 (%w)", err)
